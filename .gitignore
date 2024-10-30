@@ -42,3 +42,7 @@ Thumbs.db
 .nx/workspace-data
 
 .angular
+
+# Ignore .env files
+apps/backend/.env
+apps/frontend/.env
