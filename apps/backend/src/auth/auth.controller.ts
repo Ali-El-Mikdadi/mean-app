@@ -1,21 +1,19 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { SignupDto } from './dto/signup.dto';
+import { SigninDto } from './dto/signin.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
-  async signup(@Body() body: { email: string; password: string; name: string }) {
-    console.log('Received body:', body); // Log the received body
-    if (!body.email || !body.password || !body.name) {
-      throw new Error('Missing required fields');
-    }
-    return this.authService.signup(body.email, body.password, body.name);
+  async signup(@Body() signupDto: SignupDto) {
+    return this.authService.signup(signupDto.email, signupDto.password, signupDto.name);
   }
 
   @Post('signin')
-  async signin(@Body() body: { email: string; password: string }) {
-    return this.authService.signin(body.email, body.password);
+  async signin(@Body() signinDto: SigninDto) {
+    return this.authService.signin(signinDto.email, signinDto.password);
   }
 }
