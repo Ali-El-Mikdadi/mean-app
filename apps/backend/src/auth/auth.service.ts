@@ -13,10 +13,11 @@ export class AuthService {
   ) {}
 
   async signup(email: string, password: string, name: string) {
+    console.log('Signup data:', { email, password, name }); // Log received data in the service
     if (!password) {
       throw new Error('Password is required'); // Ensures password is provided
     }
-
+  
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new this.userModel({ email, password: hashedPassword, name });
     return user.save();
