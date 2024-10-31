@@ -3,20 +3,21 @@
  * This is only a minimal backend to get started.
  */
 
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
-import * as bodyParser from 'body-parser';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Use body-parser middleware to handle JSON requests
-  app.use(bodyParser.json());
-  
   // Use global validation pipe for DTO validation
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // strips properties not in the DTO
+      forbidNonWhitelisted: true, // throws an error if unknown properties are included
+      transform: true, // transforms payloads to be an instance of the expected DTO
+    })
+  );
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
