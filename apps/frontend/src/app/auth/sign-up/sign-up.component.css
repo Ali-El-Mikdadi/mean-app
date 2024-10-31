@@ -1,0 +1,52 @@
+.signup-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: #fff;
+    text-align: left;
+}
+
+.signup-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-field {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between label and input */
+    margin-bottom: 1rem;
+}
+
+.form-field mat-label {
+    min-width: 80px; /* Make the label a fixed width */
+    font-weight: bold;
+}
+
+mat-form-field {
+    flex-grow: 1; /* Ensures input fields take up remaining space */
+}
+
+button {
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 1rem;
+}
+
+.login-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.login-link a {
+    color: #1976d2;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}

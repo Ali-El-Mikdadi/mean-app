@@ -1,0 +1,1 @@
+import 'zone.js'; // Required for Angular otherwise browser console gives an error
