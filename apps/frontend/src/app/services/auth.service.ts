@@ -12,12 +12,19 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   signUp(data: { name: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/signup`, data);
+    console.log('SignUp Request Data:', data); // Log data before sending request
+    return this.http.post(`${this.baseUrl}/signup`, data).pipe(
+      tap(response => {
+        console.log('SignUp Response:', response); // Log response when received
+      })
+    );
   }
-
+  
   signIn(data: { email: string; password: string }): Observable<any> {
+    console.log('SignIn Request Data:', data); // Log data before sending request
     return this.http.post<{ access_token: string }>(`${this.baseUrl}/signin`, data).pipe(
       tap(response => {
+        console.log('SignIn Response:', response); // Log response when received
         this.storeToken(response.access_token);
       })
     );

@@ -26,13 +26,19 @@ export class SignUpComponent {
 
   onSubmit() {
     if (this.signUpForm.valid) {
+      console.log('Submitting Sign Up Form:', this.signUpForm.value); // Log before making service call
       this.authService.signUp(this.signUpForm.value).subscribe({
-        next: () => {
-          alert('Sign-up successful! Please log in.');
-          this.router.navigate(['/sign-in']);
+        next: (response) => {
+          console.log('SignUp Successful:', response); // Log if sign up is successful
+          alert('Sign Up Successful!');
         },
-        error: err => alert('Sign-up failed. Please try again.')
+        error: (error) => {
+          console.error('SignUp Failed:', error); // Log if sign up fails
+          alert('Sign Up Failed');
+        }
       });
+    } else {
+      console.log('Sign Up Form is invalid:', this.signUpForm); // Log invalid form details
     }
-  }
+  }  
 }
