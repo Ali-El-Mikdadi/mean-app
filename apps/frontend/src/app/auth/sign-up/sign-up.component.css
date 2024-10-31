@@ -17,17 +17,19 @@
 .form-field {
     display: flex;
     align-items: center;
-    gap: 10px; /* Space between label and input */
+    gap: 10px;
     margin-bottom: 1rem;
 }
 
-.form-field mat-label {
-    min-width: 80px; /* Make the label a fixed width */
-    font-weight: bold;
+mat-form-field {
+    flex-grow: 1;
+    position: relative;
 }
 
-mat-form-field {
-    flex-grow: 1; /* Ensures input fields take up remaining space */
+.visibility-icon {
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
 }
 
 button {

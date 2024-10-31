@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { MatIconModule } from '@angular/material/icon';
-
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,9 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi())
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
