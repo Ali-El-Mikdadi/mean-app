@@ -23,10 +23,25 @@ export class SignInComponent {
       this.authService.signIn(this.signInForm.value).subscribe({
         next: () => {
           alert('Login successful!');
-          this.router.navigate(['/protected-route']); // Change to actual protected route
+          console.log('Navigating to product route...');
+          this.router.navigate(['/product']).then(
+            success => {
+              if (success) {
+                console.log('Navigation to product route succeeded.');
+              } else {
+                console.log('Navigation to product route failed.');
+              }
+            },
+            error => {
+              console.error('Navigation failed due to error:', error);
+            }
+          );
         },
-        error: err => alert('Login failed')
+        error: err => {
+          console.error('Sign-in failed:', err);
+          alert('Login failed');
+        }
       });
     }
   }
-}
+}  
