@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,38 +11,41 @@ import { Router } from '@angular/router';
 })
 export class SignInComponent {
   signInForm: FormGroup;
+  hidePassword = true;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar // Inject MatSnackBar
+  ) {
     this.signInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
   }
 
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
   onSubmit() {
     if (this.signInForm.valid) {
       this.authService.signIn(this.signInForm.value).subscribe({
         next: () => {
-          alert('Login successful!');
-          console.log('Navigating to product route...');
-          this.router.navigate(['/products']).then(
-            success => {
-              if (success) {
-                console.log('Navigation to product route succeeded.');
-              } else {
-                console.log('Navigation to product route failed.');
-              }
-            },
-            error => {
-              console.error('Navigation failed due to error:', error);
-            }
-          );
+          this.router.navigate(['/products']); // Navigate to product list after successful login
+          this.snackBar.open('Login successful!', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
         },
-        error: err => {
-          console.error('Sign-in failed:', err);
-          alert('Login failed');
+        error: () => {
+          this.snackBar.open('Login failed. Please check your credentials and try again.', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
         }
       });
     }
   }
-}  
+}

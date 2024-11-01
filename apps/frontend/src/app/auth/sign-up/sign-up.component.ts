@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,9 +11,14 @@ import { Router } from '@angular/router';
 })
 export class SignUpComponent {
   signUpForm: FormGroup;
-  hide = true;
+  hidePassword = true;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar // Inject MatSnackBar
+  ) {
     this.signUpForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
@@ -20,25 +26,27 @@ export class SignUpComponent {
     });
   }
 
-  toggleVisibility() {
-    this.hide = !this.hide;
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
   }
 
   onSubmit() {
     if (this.signUpForm.valid) {
-      console.log('Submitting Sign Up Form:', this.signUpForm.value); // Log before making service call
       this.authService.signUp(this.signUpForm.value).subscribe({
-        next: (response) => {
-          console.log('SignUp Successful:', response); // Log if sign up is successful
-          alert('Sign Up Successful!');
+        next: () => {
+          this.router.navigate(['/sign-in']); // Navigate to sign-in after successful sign-up
+          this.snackBar.open('Sign-up successful! Please log in.', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
         },
-        error: (error) => {
-          console.error('SignUp Failed:', error); // Log if sign up fails
-          alert('Sign Up Failed');
+        error: () => {
+          this.snackBar.open('Sign-up failed. Please try again.', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
         }
       });
-    } else {
-      console.log('Sign Up Form is invalid:', this.signUpForm); // Log invalid form details
     }
-  }  
+  }
 }

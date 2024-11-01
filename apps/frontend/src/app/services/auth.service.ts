@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,36 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private baseUrl = 'http://localhost:3000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
   signUp(data: { name: string; email: string; password: string }): Observable<any> {
-    console.log('SignUp Request Data:', data); // Log data before sending request
+    console.log('SignUp Request Data:', data);
     return this.http.post(`${this.baseUrl}/signup`, data).pipe(
-      tap(response => {
-        console.log('SignUp Response:', response); // Log response when received
-      })
+      tap(
+        response => {
+          console.log('SignUp Response:', response);
+          this.snackBar.open('Sign Up Successful! Redirecting to Sign In...', 'Close', { duration: 3000 });
+        },
+        error => {
+          this.snackBar.open('Sign Up Failed. Please try again.', 'Close', { duration: 3000 });
+        }
+      )
     );
   }
   
   signIn(data: { email: string; password: string }): Observable<any> {
-    console.log('SignIn Request Data:', data); // Log data before sending request
+    console.log('SignIn Request Data:', data);
     return this.http.post<{ access_token: string }>(`${this.baseUrl}/signin`, data).pipe(
-      tap(response => {
-        console.log('SignIn Response:', response); // Log response when received
-        this.storeToken(response.access_token);
-      })
+      tap(
+        response => {
+          console.log('SignIn Response:', response);
+          this.storeToken(response.access_token);
+          this.snackBar.open('Sign In Successful!', 'Close', { duration: 3000 });
+        },
+        error => {
+          this.snackBar.open('Sign In Failed. Please check your credentials.', 'Close', { duration: 3000 });
+        }
+      )
     );
   }
 
