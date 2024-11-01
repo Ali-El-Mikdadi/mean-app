@@ -31,7 +31,22 @@ export class AuthService {
   }
 
   private storeToken(token: string): void {
+    const currentTime = new Date().getTime(); // Get the current time in milliseconds
     localStorage.setItem('access_token', token);
+    localStorage.setItem('token_received_time', currentTime.toString());
+  }
+
+  private isTokenExpired(): boolean {
+    const tokenReceivedTime = localStorage.getItem('token_received_time');
+    if (tokenReceivedTime) {
+      const currentTime = new Date().getTime();
+      const eightHoursInMillis = 8 * 60 * 60 * 1000;
+  
+      if (currentTime - parseInt(tokenReceivedTime, 10) > eightHoursInMillis) {
+        return true; // Token is expired
+      }
+    }
+    return false; // Token is still valid
   }
 
   getToken(): string | null {
@@ -43,6 +58,10 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
+    if (this.isTokenExpired()) {
+      this.logout(); // Token is expired, log out the user
+      return false;
+    }
     return !!this.getToken();
-  }
+  }  
 }
