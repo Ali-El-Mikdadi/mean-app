@@ -24,7 +24,7 @@ export class SignInComponent {
         next: () => {
           alert('Login successful!');
           console.log('Navigating to product route...');
-          this.router.navigate(['/product']).then(
+          this.router.navigate(['/products']).then(
             success => {
               if (success) {
                 console.log('Navigation to product route succeeded.');

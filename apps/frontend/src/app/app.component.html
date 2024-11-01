@@ -1,10 +1,1 @@
-<button (click)="toggleView()">
-    {{ showSignIn ? 'Go to Sign Up' : 'Go to Sign In' }}
-  </button>
-  <div *ngIf="showSignIn">
-    <app-sign-in></app-sign-in>
-  </div>
-  <div *ngIf="!showSignIn">
-    <app-sign-up></app-sign-up>
-  </div>
-  
+<router-outlet></router-outlet>

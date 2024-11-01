@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-product',
@@ -7,25 +8,29 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  product: any[] = [];
+  products: any[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     console.log('Product Component Loaded');
-    this.fetchProduct();
+    this.fetchProducts();
   }
   
-  fetchProduct(): void {
-    console.log('Fetching products...');
-    this.http.get<any[]>('http://localhost:3000/api/products').subscribe(
-      (response) => {
-        console.log('Products Received:', response);
-        this.product = response;
-      },
-      (error) => {
-        console.error('Error fetching products:', error);
-      }
-    );
+  fetchProducts(): void {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      this.http.get<any[]>('http://localhost:3000/api/products', { headers }).subscribe(
+        (response) => {
+          this.products = response;
+        },
+        (error) => {
+          console.error('Error fetching products:', error);
+        }
+      );
+    } else {
+      console.error('No token found, user might not be logged in.');
+    }
   }  
 }  

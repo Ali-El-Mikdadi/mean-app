@@ -1,8 +1,19 @@
-<div class="product-list">
-    <h2>Product List</h2>
-    <ul>
-      <li *ngFor="let product of products">
-        <strong>{{ product.name }}</strong>: {{ product.description }} - ${{ product.price }}
-      </li>
-    </ul>
-</div>  
+<div class="product-list-container">
+  <h2>Product List</h2>
+  <div class="product-grid">
+    <mat-card *ngFor="let product of products" class="product-card">
+      <mat-card-header>
+        <div mat-card-avatar class="product-avatar"></div>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-subtitle>\${{ product.price }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ product.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary">Buy Now</button>
+        <button mat-button color="accent">Details</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
