@@ -23,7 +23,8 @@ export class AppComponent implements OnInit {
     const tokenReceivedTime = localStorage.getItem('token_received_time');
     if (tokenReceivedTime) {
       const currentTime = new Date().getTime();
-      const eightHoursInMillis = 8 * 60 * 10 * 1000; // 8 hours in milliseconds expiry
+      const eightHoursInMillis = 10 * 1000; // 10 seconds in milliseconds expiry for testing faster
+      //const eightHoursInMillis = 8 * 60 * 10 * 1000; // 8 hours in milliseconds expiry
       const timePassed = currentTime - parseInt(tokenReceivedTime, 10);
       const timeLeft = eightHoursInMillis - timePassed;
 
