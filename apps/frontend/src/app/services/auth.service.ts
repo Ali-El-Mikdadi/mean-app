@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(this.isTokenValid());
   isLoggedIn$ = this.loggedIn.asObservable(); // Observable for login status
-  private baseUrl = 'http://localhost:3000/api'; // Ensure the base URL includes the /api prefix
+  private baseUrl = environment.apiUrl; // Ensure this line is correct
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar, private router: Router) {}
 
@@ -47,10 +48,9 @@ export class AuthService {
             duration: 3000,
             verticalPosition: 'top' 
           });
-          this.loggedIn.next(true); // Notify that the user is logged in
         },
         error: error => {
-          this.snackBar.open('Sign In Failed. Please check your credentials.', 'Close', {
+          this.snackBar.open('Sign In Failed. Please try again.', 'Close', {
             duration: 3000,
             verticalPosition: 'top' 
           });
@@ -70,7 +70,7 @@ export class AuthService {
     if (tokenReceivedTime) {
       const currentTime = new Date().getTime();
       const tenSecondsInMillis = 10 * 1000; // 10 seconds in milliseconds for testing
-      // Change the above line to the following for 8 hours:
+      // For 8 Hours Requirement
       // const eightHoursInMillis = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
 
       if (currentTime - parseInt(tokenReceivedTime, 10) > tenSecondsInMillis) {

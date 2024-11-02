@@ -1,19 +1,22 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from '../auth/auth.module'; // Import AuthModule here
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from '../auth/auth.module'; // Adjust the path if necessary
+import { ProductModule } from '../product/product.module'; // Import ProductModule here
 
-/**
- * AppModule imports ConfigModule for environment management,
- * MongooseModule for database connection, and AuthModule for authentication.
- */
+const mongoUri = process.env.MONGODB_URI;
+if (!mongoUri) {
+  throw new Error('MONGODB_URI environment variable is not set');
+}
+
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Makes environment variables globally available
+      isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGODB_URI), // Connect to MongoDB
-    AuthModule, // Import AuthModule for authentication routes and services
+    MongooseModule.forRoot(mongoUri),
+    AuthModule,
+    ProductModule, // Add ProductModule here
   ],
 })
 export class AppModule {}

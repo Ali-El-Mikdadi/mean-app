@@ -1,12 +1,24 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../dist/out-tsc",
     "module": "commonjs",
-    "types": ["node"],
+    "target": "es2017",
+    "lib": ["es2017", "dom"],
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "../../dist/apps/backend",
+    "rootDir": "./src",
+    "removeComments": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "target": "es2021"
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
   },
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

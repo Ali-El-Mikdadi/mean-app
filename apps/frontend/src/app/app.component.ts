@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     if (tokenReceivedTime) {
       const currentTime = new Date().getTime();
       const tenSecondsInMillis = 10 * 1000; // 10 seconds in milliseconds for testing
-      // Change the above line to the following for 8 hours:
+      // For 8 Hours Requirement
       // const eightHoursInMillis = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
       const timePassed = currentTime - parseInt(tokenReceivedTime, 10);
       const timeLeft = tenSecondsInMillis - timePassed;

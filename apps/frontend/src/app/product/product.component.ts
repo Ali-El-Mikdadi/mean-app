@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-product',
@@ -21,7 +22,7 @@ export class ProductComponent implements OnInit {
     const token = localStorage.getItem('access_token');
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      this.http.get<any[]>('http://localhost:3000/api/products', { headers }).subscribe(
+      this.http.get<any[]>(`${environment.apiUrl}/products`, { headers }).subscribe(
         (response) => {
           this.products = response;
         },
@@ -33,4 +34,4 @@ export class ProductComponent implements OnInit {
       console.error('No token found, user might not be logged in.');
     }
   }  
-}  
+}
