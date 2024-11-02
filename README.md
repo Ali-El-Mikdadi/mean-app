@@ -63,5 +63,22 @@ MeanApp is a responsive web application built using the MEAN stack. It allows us
 6. Delpyoment to Google Cloud Platform (GCP)
   - Build both the frontend & backend, build and push with docker and then lastly deploy on google cloud with a speciic region (Ex. me-west1)
 
+## Preview
+
+### Sign Up
+![Sign Un](Preview/Sign-Up.png)
+
+### Sign In
+![Sign In](Preview/Sign-In.png)
+
+### Products List
+![Products List](Preview/Products-List.png)
+
+### Forgot Password
+![Forgot Password](Preview/Forgot-Password.png)
+
+### Reset Password
+![Reset Password](Preview/Reset-Password.png)
+
 ## License
 This project is licensed under the MIT License.
