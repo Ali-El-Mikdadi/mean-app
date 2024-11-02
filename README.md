@@ -23,20 +23,6 @@ MeanApp is a responsive web application built using the MEAN stack. It allows us
 - **Deployment**: Google Cloud Platform (GCP)
 - **Monorepo Management**: Nx.dev
 
-## Requirements
-
-- Create a signup, sign in, and sign out web app that allows users to create accounts and have them registered as new users.
-- The app should identify registered users and ask them to sign in.
-- Once the user is signed in, they should remain signed in for 8 hours and then be logged out automatically unless they sign out promptly.
-- Push your project code to GitHub and submit a recording demonstrating the app functionality as well as a code walkthrough.
-
-### Bounty Points
-
-- Design and implement a “forgot password” feature.
-- Display a list of data visible only to logged-in users (e.g., users/products) when the user login is successful.
-- Use Atlas MongoDB to host your database online.
-- Deploy your app to GCP.
-
 ## Getting Started
 
 ### Prerequisites
